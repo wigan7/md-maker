@@ -1,5 +1,6 @@
 import { DocumentTypeId } from '@/types/project';
 import { ProjectContext, InterviewQuestion, InterviewSession, AIAssumption } from '@/types/interview';
+import { Language } from '@/lib/i18n/dictionaries';
 
 export interface NextQuestionResult {
   question: InterviewQuestion | null;
@@ -23,18 +24,27 @@ export interface ConsistencyReport {
 }
 
 export interface AIProvider {
-  askNextQuestion(session: InterviewSession, selectedDocTypes: DocumentTypeId[]): Promise<NextQuestionResult>;
+  askNextQuestion(
+    session: InterviewSession,
+    selectedDocTypes: DocumentTypeId[],
+    language?: Language
+  ): Promise<NextQuestionResult>;
   generateDocument(
     docType: DocumentTypeId,
     context: ProjectContext,
-    relatedDocs?: Partial<Record<DocumentTypeId, string>>
+    relatedDocs?: Partial<Record<DocumentTypeId, string>>,
+    language?: Language
   ): Promise<string>;
   regenerateWithFeedback(
     docType: DocumentTypeId,
     currentContent: string,
     feedback: string,
-    context: ProjectContext
+    context: ProjectContext,
+    language?: Language
   ): Promise<string>;
-  validateConsistency(documents: Partial<Record<DocumentTypeId, string>>): Promise<ConsistencyReport>;
+  validateConsistency(
+    documents: Partial<Record<DocumentTypeId, string>>,
+    language?: Language
+  ): Promise<ConsistencyReport>;
 }
 

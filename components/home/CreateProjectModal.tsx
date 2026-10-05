@@ -5,6 +5,7 @@ import { GlassPanel } from '@/components/common/GlassPanel';
 import { GlassButton } from '@/components/common/GlassButton';
 import { DocumentTypeId } from '@/types/project';
 import { DOCUMENT_REGISTRY } from '@/lib/documents/registry';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check, Sparkles, X, Info } from 'lucide-react';
 
 interface CreateProjectModalProps {
@@ -17,6 +18,7 @@ const ALL_DOC_TYPES: DocumentTypeId[] = ['PRD', 'DESIGN', 'AGENTS', 'ARCHITECTUR
 const RECOMMENDED_DOC_TYPES: DocumentTypeId[] = ['PRD', 'DESIGN', 'ARCHITECTURE'];
 
 export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectModalProps) {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [selectedTypes, setSelectedTypes] = useState<DocumentTypeId[]>(RECOMMENDED_DOC_TYPES);
@@ -27,7 +29,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
   const toggleDocType = (type: DocumentTypeId) => {
     if (selectedTypes.includes(type)) {
       if (selectedTypes.length === 1) {
-        setError('At least one document type must be selected.');
+        setError(t.createModal.errorDocRequired);
         return;
       }
       setSelectedTypes(selectedTypes.filter((t) => t !== type));
@@ -50,11 +52,11 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
-      setError('Please provide a project name.');
+      setError(t.createModal.errorNameRequired);
       return;
     }
     if (selectedTypes.length === 0) {
-      setError('Please select at least one document type.');
+      setError(t.createModal.errorDocRequired);
       return;
     }
     onCreate(name.trim(), description.trim(), selectedTypes);
@@ -76,17 +78,17 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
 
         <div className="mb-6">
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-            Create a New Project
+            {t.createModal.title}
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Define your product and choose the specifications to generate.
+            {t.createModal.subtitle}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-              Project Name *
+              {t.createModal.projectNameLabel}
             </label>
             <input
               type="text"
@@ -96,7 +98,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
                 setName(e.target.value);
                 if (error) setError('');
               }}
-              placeholder="e.g. Mukti Adventure, FinTech Cloud, HealthHub"
+              placeholder={t.createModal.projectNamePlaceholder}
               className="w-full px-4 py-3 rounded-ios-md glass-input text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400"
               autoFocus
             />
@@ -104,13 +106,13 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-              Brief Description
+              {t.createModal.descLabel}
             </label>
             <textarea
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="What is your app about in 1-2 sentences?"
+              placeholder={t.createModal.descPlaceholder}
               className="w-full px-4 py-3 rounded-ios-md glass-input text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 resize-none"
             />
           </div>
@@ -119,7 +121,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
           <div>
             <div className="flex items-center justify-between mb-2.5">
               <label className="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                What documents do you need?
+                {t.createModal.docSelectionLabel}
               </label>
               <div className="flex items-center gap-2">
                 <button
@@ -127,7 +129,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
                   onClick={handleSelectRecommended}
                   className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                 >
-                  Recommended
+                  {t.createModal.recommended}
                 </button>
                 <span className="text-gray-300 dark:text-gray-600">•</span>
                 <button
@@ -135,7 +137,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
                   onClick={handleSelectAll}
                   className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-medium"
                 >
-                  Select all
+                  {t.createModal.selectAll}
                 </button>
               </div>
             </div>
@@ -178,7 +180,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
             {selectedTypes.includes('PRD') && selectedTypes.includes('ARCHITECTURE') && (
               <div className="flex items-center gap-1.5 mt-3 text-xs text-gray-500 dark:text-gray-400">
                 <Info className="w-3.5 h-3.5 text-blue-500 shrink-0" />
-                <span>Architecture will inherit technical decisions from your PRD.</span>
+                <span>{t.createModal.inheritNote}</span>
               </div>
             )}
           </div>
@@ -187,7 +189,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
 
           <div className="pt-2 flex items-center justify-end gap-3">
             <GlassButton type="button" variant="ghost" onClick={onClose}>
-              Cancel
+              {t.common.cancel}
             </GlassButton>
             <GlassButton
               type="submit"
@@ -195,7 +197,7 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
               size="lg"
               icon={<Sparkles className="w-4 h-4 text-blue-200" />}
             >
-              Start AI Interview
+              {t.createModal.startInterviewBtn}
             </GlassButton>
           </div>
         </form>
@@ -203,4 +205,3 @@ export function CreateProjectModal({ isOpen, onClose, onCreate }: CreateProjectM
     </div>
   );
 }
-

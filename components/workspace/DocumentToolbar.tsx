@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { GlassButton } from '@/components/common/GlassButton';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import {
   Copy,
   Check,
@@ -41,6 +42,7 @@ export function DocumentToolbar({
   onDownloadZip,
   onAuditConsistency,
 }: DocumentToolbarProps) {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -60,7 +62,7 @@ export function DocumentToolbar({
         <button
           onClick={onOpenVersionHistory}
           className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-black/5 dark:bg-white/10 hover:bg-black/10 text-gray-600 dark:text-gray-300 transition-colors"
-          title="Click to view version history"
+          title={t.workspace.versionHistory.replace('{version}', String(version))}
         >
           v{version}
         </button>
@@ -77,7 +79,7 @@ export function DocumentToolbar({
           }`}
         >
           <Columns className="w-3.5 h-3.5" />
-          <span>Split</span>
+          <span>{t.common.split}</span>
         </button>
         <button
           onClick={() => onChangeViewMode('edit')}
@@ -88,7 +90,7 @@ export function DocumentToolbar({
           }`}
         >
           <Edit3 className="w-3.5 h-3.5" />
-          <span>Editor</span>
+          <span>{t.common.editor}</span>
         </button>
         <button
           onClick={() => onChangeViewMode('preview')}
@@ -99,7 +101,7 @@ export function DocumentToolbar({
           }`}
         >
           <Eye className="w-3.5 h-3.5" />
-          <span>Preview</span>
+          <span>{t.common.preview}</span>
         </button>
       </div>
 
@@ -109,17 +111,17 @@ export function DocumentToolbar({
         <button
           onClick={handleCopy}
           className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-ios-sm text-xs flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-          title="Copy markdown"
+          title={t.common.copy}
         >
           {copied ? (
             <>
               <Check className="w-3.5 h-3.5 text-emerald-500" />
-              <span className="hidden sm:inline text-emerald-500 font-medium">Copied</span>
+              <span className="hidden sm:inline text-emerald-500 font-medium">{t.common.copied}</span>
             </>
           ) : (
             <>
               <Copy className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Copy</span>
+              <span className="hidden sm:inline">{t.common.copy}</span>
             </>
           )}
         </button>
@@ -128,10 +130,10 @@ export function DocumentToolbar({
         <button
           onClick={onDownloadSingle}
           className="p-1.5 sm:px-2.5 sm:py-1.5 rounded-ios-sm text-xs flex items-center gap-1 text-gray-600 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
-          title="Download this markdown file"
+          title={t.common.download}
         >
           <Download className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Download</span>
+          <span className="hidden sm:inline">{t.common.download}</span>
         </button>
 
         {/* Regenerate with Feedback */}
@@ -141,7 +143,7 @@ export function DocumentToolbar({
           onClick={onRegenerate}
           icon={<Sparkles className="w-3.5 h-3.5 text-blue-200" />}
         >
-          <span className="hidden sm:inline">Improve</span>
+          <span className="hidden sm:inline">{t.workspace.improveDoc}</span>
         </GlassButton>
 
         {/* More Actions Menu */}
@@ -164,7 +166,7 @@ export function DocumentToolbar({
                 className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-ios-sm text-left text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
               >
                 <History className="w-3.5 h-3.5 text-gray-400" />
-                <span>Version History (v{version})</span>
+                <span>{t.workspace.versionHistory.replace('{version}', String(version))}</span>
               </button>
 
               {onAuditConsistency && (
@@ -173,7 +175,7 @@ export function DocumentToolbar({
                   className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-ios-sm text-left text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 >
                   <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
-                  <span>Audit Consistency</span>
+                  <span>{t.workspace.auditConsistency}</span>
                 </button>
               )}
 
@@ -182,7 +184,7 @@ export function DocumentToolbar({
                 className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-ios-sm text-left text-gray-700 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
               >
                 <Archive className="w-3.5 h-3.5 text-gray-400" />
-                <span>Download All (ZIP)</span>
+                <span>{t.common.downloadZip}</span>
               </button>
             </div>
           )}
@@ -191,4 +193,3 @@ export function DocumentToolbar({
     </div>
   );
 }
-

@@ -3,6 +3,7 @@
 import React from 'react';
 import { DocumentTypeId, ProjectDocument } from '@/types/project';
 import { DOCUMENT_REGISTRY } from '@/lib/documents/registry';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check, Loader2, FileCode } from 'lucide-react';
 
 interface DocumentSidebarProps {
@@ -20,11 +21,13 @@ export function DocumentSidebar({
   onSelectDocType,
   onOpenVersionHistory,
 }: DocumentSidebarProps) {
+  const { t } = useTranslation();
+
   return (
     <aside className="w-full md:w-60 shrink-0 glass-secondary rounded-ios-xl p-3 border border-white/20 dark:border-white/5 flex flex-col justify-between">
       <div>
         <div className="px-3 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-          Specifications
+          {t.workspace.specifications}
         </div>
 
         <nav className="space-y-1">
@@ -64,7 +67,7 @@ export function DocumentSidebar({
                           ? 'border-white/40 bg-white/20 text-white'
                           : 'border-black/10 dark:border-white/10 text-gray-400 hover:text-gray-900 dark:hover:text-white'
                       }`}
-                      title="View version history"
+                      title={t.workspace.versionHistory.replace('{version}', String(version))}
                     >
                       v{version}
                     </button>
@@ -85,7 +88,7 @@ export function DocumentSidebar({
       </div>
 
       <div className="pt-3 border-t border-black/5 dark:border-white/5 px-3 text-[11px] text-gray-400 flex items-center justify-between">
-        <span>{selectedDocTypes.length} documents</span>
+        <span>{t.workspace.documentsCount.replace('{count}', String(selectedDocTypes.length))}</span>
         <span>Markdown</span>
       </div>
     </aside>

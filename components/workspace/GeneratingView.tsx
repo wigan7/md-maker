@@ -5,6 +5,7 @@ import { GlassPanel } from '@/components/common/GlassPanel';
 import { AiOrb } from '@/components/common/AiOrb';
 import { DocumentTypeId, ProjectDocument } from '@/types/project';
 import { DOCUMENT_REGISTRY } from '@/lib/documents/registry';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check, Loader2 } from 'lucide-react';
 
 interface GeneratingViewProps {
@@ -14,16 +15,18 @@ interface GeneratingViewProps {
 }
 
 export function GeneratingView({ documents, selectedDocTypes }: GeneratingViewProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="py-20 px-4 max-w-lg mx-auto text-center space-y-8 animate-fade-in">
       <div className="flex flex-col items-center gap-4">
         <AiOrb size="lg" isThinking={true} />
         <div>
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-            Generating your workspace
+            {t.generating.title}
           </h2>
           <p className="text-xs text-gray-400 mt-1">
-            Crafting architectural specifications with DeepSeek AI
+            {t.generating.subtitle}
           </p>
         </div>
       </div>
@@ -49,17 +52,17 @@ export function GeneratingView({ documents, selectedDocTypes }: GeneratingViewPr
                 {status === 'completed' ? (
                   <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                     <Check className="w-4 h-4 stroke-[2.5]" />
-                    <span>Ready</span>
+                    <span>{t.common.ready}</span>
                   </div>
                 ) : status === 'generating' ? (
                   <div className="flex items-center gap-1.5 text-xs text-blue-600 dark:text-blue-400 font-medium">
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Writing...</span>
+                    <span>{t.common.writing}</span>
                   </div>
                 ) : (
                   <div className="flex items-center gap-1.5 text-xs text-gray-400 font-normal">
                     <span className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600" />
-                    <span>Queued</span>
+                    <span>{t.common.queued}</span>
                   </div>
                 )}
               </div>

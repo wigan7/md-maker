@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { GlassPanel } from '@/components/common/GlassPanel';
 import { GlassButton } from '@/components/common/GlassButton';
 import { Sparkles, X } from 'lucide-react';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 
 interface RegenerateModalProps {
   isOpen: boolean;
@@ -13,13 +14,6 @@ interface RegenerateModalProps {
   isLoading: boolean;
 }
 
-const EXAMPLE_PROMPTS = [
-  'Make the architecture simpler and serverless-first.',
-  'Add granular role-based access control (RBAC).',
-  'Make the design specification more mobile-friendly.',
-  'Include WebSocket real-time event updates in the data flow.',
-];
-
 export function RegenerateModal({
   isOpen,
   fileName,
@@ -27,6 +21,7 @@ export function RegenerateModal({
   onRegenerate,
   isLoading,
 }: RegenerateModalProps) {
+  const { t } = useTranslation();
   const [feedback, setFeedback] = useState('');
 
   if (!isOpen) return null;
@@ -57,10 +52,10 @@ export function RegenerateModal({
           </div>
           <div>
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-              Improve {fileName}
+              {t.regenerateModal.title.replace('{fileName}', fileName)}
             </h2>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              Provide instructions to iterate and refine this specification.
+              {t.regenerateModal.subtitle}
             </p>
           </div>
         </div>
@@ -68,14 +63,14 @@ export function RegenerateModal({
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wider mb-2">
-              What would you like to change?
+              {t.regenerateModal.label}
             </label>
             <textarea
               rows={4}
               required
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              placeholder="e.g. Expand on the user authentication flow, add rate limiting rules..."
+              placeholder={t.regenerateModal.placeholder}
               className="w-full p-3.5 rounded-ios-md glass-input text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 resize-none leading-relaxed"
               autoFocus
             />
@@ -84,10 +79,10 @@ export function RegenerateModal({
           {/* Quick suggestions */}
           <div>
             <span className="text-[11px] font-medium text-gray-400 block mb-1.5">
-              Suggestions:
+              {t.regenerateModal.suggestionsLabel}
             </span>
             <div className="flex flex-wrap gap-1.5">
-              {EXAMPLE_PROMPTS.map((prompt) => (
+              {t.regenerateModal.suggestions.map((prompt) => (
                 <button
                   key={prompt}
                   type="button"
@@ -102,7 +97,7 @@ export function RegenerateModal({
 
           <div className="pt-3 flex items-center justify-end gap-3 border-t border-black/5 dark:border-white/5">
             <GlassButton type="button" variant="ghost" onClick={onClose}>
-              Cancel
+              {t.common.cancel}
             </GlassButton>
             <GlassButton
               type="submit"
@@ -111,7 +106,7 @@ export function RegenerateModal({
               disabled={!feedback.trim() || isLoading}
               icon={<Sparkles className="w-4 h-4 text-blue-200" />}
             >
-              {isLoading ? 'Improving...' : 'Regenerate'}
+              {isLoading ? t.regenerateModal.submittingBtn : t.regenerateModal.submitBtn}
             </GlassButton>
           </div>
         </form>

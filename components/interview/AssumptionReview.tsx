@@ -4,6 +4,7 @@ import React from 'react';
 import { GlassPanel } from '@/components/common/GlassPanel';
 import { GlassButton } from '@/components/common/GlassButton';
 import { ProjectContext, AIAssumption } from '@/types/interview';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 interface AssumptionReviewProps {
@@ -21,6 +22,8 @@ export function AssumptionReview({
   onProceedToGenerate,
   isGenerating = false,
 }: AssumptionReviewProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-2xl mx-auto space-y-8 animate-fade-in">
       <div className="text-center space-y-2">
@@ -28,10 +31,10 @@ export function AssumptionReview({
           <CheckCircle2 className="w-6 h-6 stroke-[2]" />
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          Your project is understood.
+          {t.assumptions.title}
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-          Here is the synthesis of your product requirements. Review AI assumptions before generating specifications.
+          {t.assumptions.subtitle}
         </p>
       </div>
 
@@ -39,14 +42,14 @@ export function AssumptionReview({
       <GlassPanel variant="primary" className="p-6 space-y-4">
         <div className="border-b border-black/5 dark:border-white/5 pb-3">
           <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
-            Project Overview
+            {t.assumptions.overviewTitle}
           </span>
           <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mt-0.5">
             {context.projectName}
           </h3>
           {context.problem && (
             <p className="text-xs text-gray-600 dark:text-gray-300 mt-2 leading-relaxed">
-              <strong className="text-gray-800 dark:text-gray-200">Core Problem: </strong>
+              <strong className="text-gray-800 dark:text-gray-200">{t.assumptions.coreProblem} </strong>
               {context.problem}
             </p>
           )}
@@ -54,25 +57,25 @@ export function AssumptionReview({
 
         <div className="grid grid-cols-2 gap-4 text-xs">
           <div>
-            <span className="text-gray-400 font-medium">Platforms</span>
+            <span className="text-gray-400 font-medium">{t.assumptions.platforms}</span>
             <p className="text-gray-800 dark:text-gray-200 font-semibold mt-0.5 capitalize">
               {context.platforms.join(', ') || 'Web Application'}
             </p>
           </div>
           <div>
-            <span className="text-gray-400 font-medium">Primary Tech Stack</span>
+            <span className="text-gray-400 font-medium">{t.assumptions.techStack}</span>
             <p className="text-gray-800 dark:text-gray-200 font-semibold mt-0.5">
               {context.technology.frontend || 'Next.js, TypeScript'}
             </p>
           </div>
           <div>
-            <span className="text-gray-400 font-medium">Database</span>
+            <span className="text-gray-400 font-medium">{t.assumptions.database}</span>
             <p className="text-gray-800 dark:text-gray-200 font-semibold mt-0.5">
               {context.database || 'PostgreSQL'}
             </p>
           </div>
           <div>
-            <span className="text-gray-400 font-medium">Design System</span>
+            <span className="text-gray-400 font-medium">{t.assumptions.designSystem}</span>
             <p className="text-gray-800 dark:text-gray-200 font-semibold mt-0.5">
               {context.designPreferences.style || 'Premium iOS Glass UI'}
             </p>
@@ -85,14 +88,14 @@ export function AssumptionReview({
         <div className="flex items-center justify-between px-1">
           <span className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-            AI Architectural Assumptions ({assumptions.length})
+            {t.assumptions.assumptionsTitle} ({assumptions.length})
           </span>
-          <span className="text-xs text-gray-400">Click card to accept / decline</span>
+          <span className="text-xs text-gray-400">{t.assumptions.assumptionsHint}</span>
         </div>
 
         {assumptions.length === 0 ? (
           <GlassPanel variant="secondary" className="p-4 text-center text-xs text-gray-400">
-            No additional assumptions needed. All specifications were explicitly provided.
+            {t.assumptions.noAssumptions}
           </GlassPanel>
         ) : (
           <div className="space-y-2">
@@ -137,10 +140,9 @@ export function AssumptionReview({
           onClick={onProceedToGenerate}
           icon={<ArrowRight className="w-4 h-4" />}
         >
-          Generate Documents Now
+          {t.assumptions.generateBtn}
         </GlassButton>
       </div>
     </div>
   );
 }
-

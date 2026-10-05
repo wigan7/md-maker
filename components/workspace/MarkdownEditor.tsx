@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 
 interface MarkdownEditorProps {
   content: string;
@@ -9,6 +10,8 @@ interface MarkdownEditorProps {
 }
 
 export function MarkdownEditor({ content, onChange, fileName }: MarkdownEditorProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="h-full flex flex-col rounded-ios-xl glass-primary overflow-hidden border border-white/20 dark:border-white/10">
       {/* Editor Header Bar */}
@@ -17,7 +20,9 @@ export function MarkdownEditor({ content, onChange, fileName }: MarkdownEditorPr
           {fileName}
         </span>
         <span className="text-[11px]">
-          {content.length.toLocaleString()} characters · {content.split('\n').length} lines
+          {t.workspace.charsLines
+            .replace('{chars}', content.length.toLocaleString())
+            .replace('{lines}', String(content.split('\n').length))}
         </span>
       </div>
 
@@ -28,10 +33,9 @@ export function MarkdownEditor({ content, onChange, fileName }: MarkdownEditorPr
           onChange={(e) => onChange(e.target.value)}
           spellCheck={false}
           className="w-full h-full p-5 bg-transparent text-gray-800 dark:text-gray-200 font-mono text-xs sm:text-[13px] leading-relaxed resize-none focus:outline-none selection:bg-blue-500/20"
-          placeholder="# Write or edit markdown here..."
+          placeholder={t.workspace.editorPlaceholder}
         />
       </div>
     </div>
   );
 }
-

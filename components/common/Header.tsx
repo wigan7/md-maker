@@ -3,7 +3,9 @@
 import React from 'react';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
+import { LanguageToggle } from './LanguageToggle';
 import { useProjectStore } from '@/lib/store/useProjectStore';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Command, FolderKanban, Sparkles } from 'lucide-react';
 
 interface HeaderProps {
@@ -13,6 +15,7 @@ interface HeaderProps {
 
 export function Header({ onOpenCommandPalette, onGoHome }: HeaderProps) {
   const { activeProjectId, getActiveProject, setActiveProject } = useProjectStore();
+  const { t } = useTranslation();
   const activeProject = getActiveProject();
 
   return (
@@ -30,7 +33,7 @@ export function Header({ onOpenCommandPalette, onGoHome }: HeaderProps) {
           {activeProject && (
             <div className="hidden lg:flex items-center gap-2 pl-3 border-l border-black/10 dark:border-white/10">
               <span className="text-[11px] text-gray-400 font-medium uppercase tracking-wider">
-                Project
+                {t.header.projectLabel}
               </span>
               <span className="text-xs text-gray-800 dark:text-gray-200 font-semibold truncate max-w-[160px]">
                 {activeProject.name}
@@ -53,7 +56,7 @@ export function Header({ onOpenCommandPalette, onGoHome }: HeaderProps) {
             }`}
           >
             <FolderKanban className="w-3.5 h-3.5" />
-            Projects
+            {t.common.projects}
           </button>
 
           {activeProject && (
@@ -66,12 +69,12 @@ export function Header({ onOpenCommandPalette, onGoHome }: HeaderProps) {
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-              Workspace
+              {t.common.workspace}
             </button>
           )}
         </div>
 
-        {/* Right Actions: Command Palette & Theme */}
+        {/* Right Actions: Command Palette, Language & Theme */}
         <div className="flex items-center gap-2">
           <button
             onClick={onOpenCommandPalette}
@@ -81,6 +84,7 @@ export function Header({ onOpenCommandPalette, onGoHome }: HeaderProps) {
             <Command className="w-3.5 h-3.5" />
             <span className="hidden md:inline font-mono text-[11px]">⌘K</span>
           </button>
+          <LanguageToggle />
           <ThemeToggle />
         </div>
       </div>

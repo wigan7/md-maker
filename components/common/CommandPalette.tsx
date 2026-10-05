@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useProjectStore } from '@/lib/store/useProjectStore';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import {
   PlusCircle,
   FileText,
@@ -20,6 +21,7 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPaletteProps) {
+  const { t } = useTranslation();
   const [search, setSearch] = useState('');
   const { projects, activeProjectId, setActiveProject, getActiveProject, setActiveDocType } = useProjectStore();
   const activeProject = getActiveProject();
@@ -64,7 +66,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Type a command or search documents..."
+            placeholder={t.common.search}
             className="w-full bg-transparent border-none text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none"
             autoFocus
           />
@@ -87,7 +89,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-ios-md text-left text-gray-800 dark:text-gray-200 hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
           >
             <PlusCircle className="w-4 h-4 text-blue-500" />
-            <span>Create New Project</span>
+            <span>{t.home.createProjectBtn}</span>
           </button>
 
           {/* Active project documents */}
@@ -103,10 +105,14 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
               >
                 <div className="flex items-center gap-3">
                   <FileText className="w-4 h-4 text-gray-400" />
-                  <span>Go to {type}.md</span>
+                  <span>{t.common.goToDoc.replace('{fileName}', `${type}.md`)}</span>
                 </div>
                 <span className="text-xs text-gray-400">
-                  {activeProject.documents[type]?.status || 'pending'}
+                  {activeProject.documents[type]?.status === 'completed'
+                    ? t.common.ready
+                    : activeProject.documents[type]?.status === 'generating'
+                    ? t.common.writing
+                    : t.common.queued}
                 </span>
               </button>
             ))}
@@ -118,7 +124,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-ios-md text-left text-gray-800 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
               <Download className="w-4 h-4 text-gray-400" />
-              <span>Download Project as ZIP</span>
+              <span>{t.common.downloadProjectZip}</span>
             </button>
           )}
 
@@ -126,7 +132,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
           {projects.length > 0 && (
             <div className="pt-2 border-t border-black/5 dark:border-white/5">
               <div className="px-3 py-1 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
-                Projects
+                {t.common.projects}
               </div>
               {projects.map((p) => (
                 <button
@@ -146,7 +152,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
                     <span className="truncate max-w-[280px]">{p.name}</span>
                   </div>
                   <span className="text-[11px] text-gray-400">
-                    {p.selectedDocTypes.length} docs
+                    {t.workspace.documentsCount.replace('{count}', String(p.selectedDocTypes.length))}
                   </span>
                 </button>
               ))}
@@ -160,7 +166,7 @@ export function CommandPalette({ isOpen, onClose, onNewProject }: CommandPalette
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-ios-md text-left text-gray-800 dark:text-gray-200 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
             >
               <Moon className="w-4 h-4 text-gray-400" />
-              <span>Toggle Dark / Light Mode</span>
+              <span>{t.common.toggleTheme}</span>
             </button>
           </div>
         </div>

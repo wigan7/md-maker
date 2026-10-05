@@ -4,16 +4,19 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 
 interface MarkdownPreviewProps {
   content: string;
 }
 
 export function MarkdownPreview({ content }: MarkdownPreviewProps) {
+  const { t } = useTranslation();
+
   if (!content) {
     return (
       <div className="h-full flex items-center justify-center p-8 text-center text-xs text-gray-400 glass-primary rounded-ios-xl border border-white/20 dark:border-white/10">
-        No content to preview yet. Complete generation or start typing in the editor.
+        {t.workspace.emptyPreview}
       </div>
     );
   }
@@ -28,4 +31,3 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
     </div>
   );
 }
-

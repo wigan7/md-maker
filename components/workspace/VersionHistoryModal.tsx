@@ -4,6 +4,7 @@ import React from 'react';
 import { GlassButton } from '@/components/common/GlassButton';
 import { ProjectDocument } from '@/types/project';
 import { History, X, RotateCcw } from 'lucide-react';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 
 interface VersionHistoryModalProps {
   isOpen: boolean;
@@ -18,6 +19,8 @@ export function VersionHistoryModal({
   onClose,
   onRestore,
 }: VersionHistoryModalProps) {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
   return (
@@ -36,14 +39,14 @@ export function VersionHistoryModal({
         <div className="flex items-center gap-2.5 mb-4">
           <History className="w-5 h-5 text-blue-500" />
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-            Version History: {doc.fileName}
+            {t.versionModal.title.replace('{fileName}', doc.fileName)}
           </h2>
         </div>
 
         <div className="max-h-80 overflow-y-auto space-y-2 pr-1">
           {doc.versions.length === 0 ? (
             <p className="text-xs text-gray-400 py-6 text-center">
-              Current version is the only recorded revision (v{doc.currentVersion}).
+              {t.versionModal.empty.replace('{version}', String(doc.currentVersion))}
             </p>
           ) : (
             doc.versions.map((ver) => {
@@ -60,10 +63,12 @@ export function VersionHistoryModal({
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-xs">Version {ver.version}</span>
+                      <span className="font-bold text-xs">
+                        {t.versionModal.versionLabel.replace('{version}', String(ver.version))}
+                      </span>
                       {isCurrent && (
                         <span className="text-[10px] uppercase font-bold tracking-wide px-1.5 py-0.2 rounded-full bg-blue-500 text-white">
-                          Active
+                          {t.common.active}
                         </span>
                       )}
                     </div>
@@ -89,7 +94,7 @@ export function VersionHistoryModal({
                         onClose();
                       }}
                     >
-                      Restore
+                      {t.versionModal.restoreBtn}
                     </GlassButton>
                   )}
                 </div>

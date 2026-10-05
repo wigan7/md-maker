@@ -4,6 +4,7 @@ import React from 'react';
 import { GlassButton } from '@/components/common/GlassButton';
 import { ConsistencyReport } from '@/lib/ai/types';
 import { ShieldCheck, AlertTriangle, CheckCircle, X } from 'lucide-react';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 
 interface ConsistencyAuditModalProps {
   isOpen: boolean;
@@ -18,6 +19,8 @@ export function ConsistencyAuditModal({
   report,
   isLoading,
 }: ConsistencyAuditModalProps) {
+  const { t } = useTranslation();
+
   if (!isOpen) return null;
 
   return (
@@ -37,10 +40,10 @@ export function ConsistencyAuditModal({
           <ShieldCheck className="w-6 h-6 text-blue-500" />
           <div>
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">
-              Cross-Document Consistency Audit
+              {t.auditModal.title}
             </h2>
             <p className="text-xs text-gray-400">
-              Verifying alignment across PRD, Design, Architecture, Database & Agents.
+              {t.auditModal.subtitle}
             </p>
           </div>
         </div>
@@ -48,13 +51,13 @@ export function ConsistencyAuditModal({
         {isLoading ? (
           <div className="py-12 text-center space-y-2">
             <div className="w-8 h-8 rounded-full border-2 border-blue-500 border-t-transparent animate-spin mx-auto" />
-            <p className="text-xs text-gray-500">Auditing document contracts for conflicts...</p>
+            <p className="text-xs text-gray-500">{t.auditModal.auditingText}</p>
           </div>
         ) : report ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 rounded-ios-lg glass-secondary">
               <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-                Coherence Score
+                {t.auditModal.coherenceScore}
               </span>
               <span
                 className={`font-mono text-base font-bold ${
@@ -70,9 +73,9 @@ export function ConsistencyAuditModal({
             {report.issues.length === 0 ? (
               <div className="p-6 text-center rounded-ios-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 space-y-1">
                 <CheckCircle className="w-6 h-6 mx-auto stroke-[2]" />
-                <p className="text-sm font-semibold">Perfect Alignment</p>
+                <p className="text-sm font-semibold">{t.auditModal.perfectTitle}</p>
                 <p className="text-xs opacity-90">
-                  No technical or design conflicts detected between specifications.
+                  {t.auditModal.perfectDesc}
                 </p>
               </div>
             ) : (
@@ -92,7 +95,7 @@ export function ConsistencyAuditModal({
                       {issue.conflictDescription}
                     </p>
                     <div className="pt-1 border-t border-amber-500/20 text-[10px] text-amber-800 dark:text-amber-300">
-                      <strong>Resolution: </strong> {issue.recommendedResolution}
+                      <strong>{t.auditModal.resolutionLabel} </strong> {issue.recommendedResolution}
                     </div>
                   </div>
                 ))}
@@ -103,7 +106,7 @@ export function ConsistencyAuditModal({
 
         <div className="pt-4 mt-4 border-t border-black/5 dark:border-white/5 flex justify-end">
           <GlassButton variant="secondary" size="sm" onClick={onClose}>
-            Close
+            {t.common.close}
           </GlassButton>
         </div>
       </div>

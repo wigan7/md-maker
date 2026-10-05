@@ -2,15 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAIProvider } from '@/lib/ai';
 import { ProjectContext } from '@/types/interview';
 import { DocumentTypeId } from '@/types/project';
+import { Language } from '@/lib/i18n/dictionaries';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { docType, currentContent, feedback, context } = body as {
+    const { docType, currentContent, feedback, context, language = 'id' } = body as {
       docType: DocumentTypeId;
       currentContent: string;
       feedback: string;
       context: ProjectContext;
+      language?: Language;
     };
 
     if (!docType || !currentContent || !feedback || !context) {
@@ -21,7 +23,7 @@ export async function POST(req: NextRequest) {
     }
 
     const provider = getAIProvider();
-    const content = await provider.regenerateWithFeedback(docType, currentContent, feedback, context);
+    const content = await provider.regenerateWithFeedback(docType, currentContent, feedback, context, language);
 
     return NextResponse.json({ docType, content });
   } catch (error: any) {

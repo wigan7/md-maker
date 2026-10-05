@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { InterviewSession, ProjectContext, QuestionAnswer } from '@/types/interview';
 import { Project, DocumentTypeId } from '@/types/project';
+import { Language } from '@/lib/i18n/dictionaries';
 
 interface InterviewStoreState {
   sessions: Record<string, InterviewSession>;
@@ -9,14 +10,14 @@ interface InterviewStoreState {
   error: string | null;
 
   // Actions
-  initSession: (project: Project) => Promise<void>;
-  submitAnswer: (projectId: string, selectedDocTypes: DocumentTypeId[], answer: string | string[] | number | boolean) => Promise<void>;
+  initSession: (project: Project, language?: Language) => Promise<void>;
+  submitAnswer: (projectId: string, selectedDocTypes: DocumentTypeId[], answer: string | string[] | number | boolean, language?: Language) => Promise<void>;
   toggleAssumption: (projectId: string, assumptionId: string) => void;
   setError: (err: string | null) => void;
   getSession: (projectId: string) => InterviewSession | undefined;
 }
 
-const createInitialContext = (project: Project): ProjectContext => ({
+const createInitialContext = (project: Project, language: Language = 'id'): ProjectContext => ({
   projectName: project.name,
   description: project.description,
   problem: '',
@@ -56,13 +57,26 @@ export const useInterviewStore = create<InterviewStoreState>()(
 
       setError: (err) => set({ error: err }),
 
-      initSession: async (project: Project) => {
+      initSession: async (project: Project, language: Language = 'id') => {
         const existing = get().sessions[project.id];
         if (existing && existing.currentQuestion) {
           return;
         }
 
-        const initialContext = existing?.context || createInitialContext(project);
+        const initialContext = existing?.context || createInitialContext(project, language);
+
+        const isId = language === 'id';
+        const initialQuestionText = isId
+          ? `Masalah atau tantangan utama apa yang diselesaikan oleh ${project.name} bagi penggunanya?`
+          : `What primary problem or core challenge does ${project.name} solve for its users?`;
+
+        const initialPlaceholder = isId
+          ? 'Jelaskan hambatan alur kerja, kendala pengguna, atau kebutuhan yang belum terpenuhi...'
+          : 'Describe the frustration, workflow bottleneck, or unmet need...';
+
+        const initialRationale = isId
+          ? 'Memahami rumusan masalah mendefinisikan proposisi nilai inti dari seluruh dokumen spesifikasi.'
+          : 'Understanding the problem statement defines the core value proposition of all documents.';
 
         const initialSession: InterviewSession = {
           projectId: project.id,
@@ -73,11 +87,11 @@ export const useInterviewStore = create<InterviewStoreState>()(
           history: [],
           currentQuestion: {
             id: 'q-problem-statement',
-            text: `What primary problem or core challenge does ${project.name} solve for its users?`,
+            text: initialQuestionText,
             category: 'Project',
             type: 'textarea',
-            placeholder: 'Describe the frustration, workflow bottleneck, or unmet need...',
-            rationale: 'Understanding the problem statement defines the core value proposition of all documents.',
+            placeholder: initialPlaceholder,
+            rationale: initialRationale,
           },
           context: initialContext,
           isComplete: false,
@@ -93,7 +107,7 @@ export const useInterviewStore = create<InterviewStoreState>()(
         }));
       },
 
-      submitAnswer: async (projectId: string, selectedDocTypes: DocumentTypeId[], answer: string | string[] | number | boolean) => {
+      submitAnswer: async (projectId: string, selectedDocTypes: DocumentTypeId[], answer: string | string[] | number | boolean, language: Language = 'id') => {
         const session = get().sessions[projectId];
         if (!session || !session.currentQuestion) return;
 
@@ -142,6 +156,7 @@ export const useInterviewStore = create<InterviewStoreState>()(
             body: JSON.stringify({
               session: intermediateSession,
               selectedDocTypes,
+              language,
             }),
           });
 
@@ -197,7 +212,7 @@ export const useInterviewStore = create<InterviewStoreState>()(
       },
     }),
     {
-      name: 'md-maker-interview-v1',
+      name: 'prdmaker-interview-v1',
     }
   )
 );

@@ -14,12 +14,14 @@ import { VersionHistoryModal } from './VersionHistoryModal';
 import { ConsistencyAuditModal } from './ConsistencyAuditModal';
 import { downloadSingleDocument, downloadProjectZip } from '@/lib/utils/export';
 import { ConsistencyReport } from '@/lib/ai/types';
+import { useLanguageStore } from '@/lib/store/useLanguageStore';
 
 interface DocumentWorkspaceProps {
   project: Project;
 }
 
 export function DocumentWorkspace({ project }: DocumentWorkspaceProps) {
+  const language = useLanguageStore((state) => state.language);
   const {
     activeDocType,
     setActiveDocType,
@@ -75,6 +77,7 @@ export function DocumentWorkspace({ project }: DocumentWorkspaceProps) {
               docType: type,
               context: session.context,
               relatedDocs: generatedContentMap,
+              language,
             }),
           });
 
@@ -102,7 +105,7 @@ export function DocumentWorkspace({ project }: DocumentWorkspaceProps) {
     return () => {
       isCancelled = true;
     };
-  }, [project.id, isGeneratingInitial, project.selectedDocTypes, session]);
+  }, [project.id, isGeneratingInitial, project.selectedDocTypes, session, language]);
 
   if (isGeneratingInitial) {
     return (
@@ -142,6 +145,7 @@ export function DocumentWorkspace({ project }: DocumentWorkspaceProps) {
           currentContent: activeDocument.content,
           feedback,
           context: session.context,
+          language,
         }),
       });
 
@@ -175,7 +179,7 @@ export function DocumentWorkspace({ project }: DocumentWorkspaceProps) {
       const res = await fetch('/api/ai/validate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ documents: docsRecord }),
+        body: JSON.stringify({ documents: docsRecord, language }),
       });
 
       if (!res.ok) throw new Error('Failed to run audit');

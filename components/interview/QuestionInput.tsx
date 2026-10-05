@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { InterviewQuestion } from '@/types/interview';
 import { GlassButton } from '@/components/common/GlassButton';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check, ArrowRight } from 'lucide-react';
 
 interface QuestionInputProps {
@@ -12,6 +13,7 @@ interface QuestionInputProps {
 }
 
 export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputProps) {
+  const { t } = useTranslation();
   const [textValue, setTextValue] = useState('');
   const [singleChoice, setSingleChoice] = useState<string>('');
   const [multiChoice, setMultiChoice] = useState<string[]>([]);
@@ -103,7 +105,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               onClick={() => handleSubmit()}
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue
+              {t.common.continue}
             </GlassButton>
           </div>
         </div>
@@ -148,7 +150,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               onClick={() => handleSubmit()}
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue ({multiChoice.length} selected)
+              {t.interview.continueSelected.replace('{count}', String(multiChoice.length))}
             </GlassButton>
           </div>
         </div>
@@ -166,7 +168,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
                   : 'glass-secondary border-black/5 dark:border-white/5 text-gray-700 dark:text-gray-300 hover:border-black/15'
               }`}
             >
-              <span className="text-base">Yes, include it</span>
+              <span className="text-base">{t.interview.yesOption}</span>
             </div>
 
             <div
@@ -177,7 +179,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
                   : 'glass-secondary border-black/5 dark:border-white/5 text-gray-700 dark:text-gray-300 hover:border-black/15'
               }`}
             >
-              <span className="text-base">No, keep it out</span>
+              <span className="text-base">{t.interview.noOption}</span>
             </div>
           </div>
 
@@ -189,7 +191,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               onClick={() => handleSubmit()}
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue
+              {t.common.continue}
             </GlassButton>
           </div>
         </div>
@@ -215,7 +217,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               type="submit"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue
+              {t.common.continue}
             </GlassButton>
           </div>
         </form>
@@ -228,7 +230,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
             type="text"
             value={textValue}
             onChange={(e) => setTextValue(e.target.value)}
-            placeholder={question.placeholder || 'Your answer...'}
+            placeholder={question.placeholder || t.interview.inputPlaceholder}
             className="w-full px-4 py-3.5 rounded-ios-md glass-input text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400"
             autoFocus
           />
@@ -240,7 +242,7 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               type="submit"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue
+              {t.common.continue}
             </GlassButton>
           </div>
         </form>
@@ -260,13 +262,13 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
                 handleSubmit();
               }
             }}
-            placeholder={question.placeholder || 'Type your detailed answer... (⌘ + Enter to continue)'}
+            placeholder={question.placeholder || t.interview.typeAnswerPlaceholder}
             className="w-full p-4 rounded-ios-lg glass-input text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 resize-none leading-relaxed"
             autoFocus
           />
           <div className="flex items-center justify-between">
             <span className="text-[11px] text-gray-400">
-              Press <kbd className="font-mono px-1 py-0.5 rounded bg-black/5 dark:bg-white/10">⌘/Ctrl + Enter</kbd> to submit
+              {t.interview.pressKeyHint}
             </span>
             <GlassButton
               variant="primary"
@@ -275,11 +277,10 @@ export function QuestionInput({ question, onSubmit, isLoading }: QuestionInputPr
               type="submit"
               icon={<ArrowRight className="w-4 h-4" />}
             >
-              Continue
+              {t.common.continue}
             </GlassButton>
           </div>
         </form>
       );
   }
 }
-

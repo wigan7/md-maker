@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Check } from 'lucide-react';
 
 interface ProgressBarProps {
   currentCategory: string;
   completedCategories: string[];
   currentStep: number;
-  totalEstimatedSteps: number;
 }
 
 const CATEGORIES = [
@@ -17,13 +17,15 @@ const CATEGORIES = [
   'Design',
   'Technology',
   'Data',
-];
+] as const;
 
 export function ProgressBar({
   currentCategory,
   completedCategories,
   currentStep,
 }: ProgressBarProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="w-full flex flex-col items-center gap-3">
       {/* Category Pills */}
@@ -31,6 +33,7 @@ export function ProgressBar({
         {CATEGORIES.map((cat) => {
           const isDone = completedCategories.includes(cat);
           const isCurrent = currentCategory === cat;
+          const label = t.interview.categories[cat as keyof typeof t.interview.categories] || cat;
 
           return (
             <div
@@ -50,7 +53,7 @@ export function ProgressBar({
               ) : (
                 <span className="w-1.5 h-1.5 rounded-full bg-gray-300 dark:bg-gray-700" />
               )}
-              <span>{cat}</span>
+              <span>{label}</span>
             </div>
           );
         })}
@@ -58,9 +61,9 @@ export function ProgressBar({
 
       {/* Step dot indicator */}
       <div className="flex items-center gap-1.5 text-xs text-gray-400">
-        <span>Step {currentStep}</span>
+        <span>{t.interview.step} {currentStep}</span>
         <span className="text-gray-300 dark:text-gray-600">•</span>
-        <span>Adaptive Discovery</span>
+        <span>{t.interview.adaptiveDiscovery}</span>
       </div>
     </div>
   );

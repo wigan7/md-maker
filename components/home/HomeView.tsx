@@ -3,8 +3,8 @@
 import React from 'react';
 import { GlassPanel } from '@/components/common/GlassPanel';
 import { GlassButton } from '@/components/common/GlassButton';
-import { Logo } from '@/components/common/Logo';
 import { Project } from '@/types/project';
+import { useTranslation } from '@/lib/store/useLanguageStore';
 import { Plus, ArrowRight, Trash2, FileText, Sparkles, FolderKanban } from 'lucide-react';
 
 interface HomeViewProps {
@@ -20,6 +20,8 @@ export function HomeView({
   onSelectProject,
   onDeleteProject,
 }: HomeViewProps) {
+  const { t } = useTranslation();
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-16 sm:py-20 animate-fade-in">
       {/* Hero Minimal Section */}
@@ -28,18 +30,18 @@ export function HomeView({
           <Sparkles className="w-3.5 h-3.5 text-blue-500" />
           <span>prdmaker by wigan7</span>
           <span className="text-gray-300 dark:text-gray-600">•</span>
-          <span className="text-gray-500 dark:text-gray-400">AI Specification Architect</span>
+          <span className="text-gray-500 dark:text-gray-400">{t.home.badge}</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 max-w-2xl mx-auto leading-tight">
-          Turn your idea into <br />
+          {t.home.heroTitleLine1} <br />
           <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 bg-clip-text text-transparent">
-            production-ready specifications.
+            {t.home.heroTitleGradient}
           </span>
         </h1>
 
         <p className="mt-4 text-sm sm:text-base text-gray-500 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">
-          An adaptive AI architect interviews you, maps your project requirements, and writes comprehensive PRD, Design, Architecture, Database, and Agent docs.
+          {t.home.heroSubtitle}
         </p>
 
         <div className="mt-8 flex justify-center">
@@ -49,7 +51,7 @@ export function HomeView({
             onClick={onNewProject}
             icon={<Plus className="w-5 h-5" />}
           >
-            Create New Project
+            {t.home.createProjectBtn}
           </GlassButton>
         </div>
       </div>
@@ -58,7 +60,7 @@ export function HomeView({
       <div>
         <div className="flex items-center justify-between mb-4 px-1">
           <h2 className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-            Your Projects ({projects.length})
+            {t.home.yourProjects} ({projects.length})
           </h2>
         </div>
 
@@ -69,13 +71,13 @@ export function HomeView({
           >
             <FolderKanban className="w-10 h-10 text-gray-400 mx-auto mb-3 stroke-[1.5]" />
             <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              No projects yet
+              {t.home.noProjectsTitle}
             </p>
             <p className="text-xs text-gray-400 mt-1 mb-5">
-              Start by creating your first software specification project.
+              {t.home.noProjectsDesc}
             </p>
             <GlassButton variant="secondary" size="sm" onClick={onNewProject}>
-              Create Project
+              {t.home.createProjectBtn}
             </GlassButton>
           </GlassPanel>
         ) : (
@@ -101,12 +103,12 @@ export function HomeView({
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          if (confirm(`Delete "${project.name}"?`)) {
+                          if (confirm(`${t.home.confirmDelete} (${project.name})`)) {
                             onDeleteProject(project.id);
                           }
                         }}
                         className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md text-gray-400 hover:text-red-500 hover:bg-red-500/10 transition-all"
-                        title="Delete project"
+                        title={t.common.delete}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -123,12 +125,12 @@ export function HomeView({
                     <div className="flex items-center gap-1.5">
                       <FileText className="w-3.5 h-3.5 text-gray-400" />
                       <span>
-                        {completedDocs} / {totalDocs} docs ready
+                        {completedDocs} / {totalDocs} {t.home.docsReady}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 font-medium group-hover:translate-x-1 transition-transform">
-                      <span>Open</span>
+                      <span>{t.home.open}</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </div>
                   </div>
