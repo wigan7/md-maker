@@ -3,7 +3,7 @@ export type Language = 'id' | 'en';
 export const DICTIONARIES = {
   id: {
     common: {
-      appName: 'prdmaker',
+      appName: 'PreVibe',
       byline: 'oleh wigan7',
       pro: 'PRO',
       ai: 'AI',
@@ -41,15 +41,15 @@ export const DICTIONARIES = {
       projectLabel: 'Proyek',
     },
     footer: {
-      tagline: 'Mesin Spesifikasi Bertenaga AI',
+      tagline: 'Blueprint Engine Sebelum Vibe Coding',
       githubLink: 'wigan7 di github',
     },
     home: {
-      badge: 'Arsitek Spesifikasi AI',
-      heroTitleLine1: 'Ubah ide aplikasi Anda menjadi',
-      heroTitleGradient: 'spesifikasi siap produksi.',
+      badge: 'Sebelum Anda Vibe Coding',
+      heroTitleLine1: 'Rancang blueprint sebelum Anda',
+      heroTitleGradient: 'mulai vibe coding.',
       heroSubtitle:
-        'AI architect adaptif mewawancarai Anda, memetakan kebutuhan sistem, dan menyusun dokumen PRD, Desain, Arsitektur, Database, dan Agen secara komprehensif.',
+        'AI architect adaptif yang mewawancarai visi produk Anda, menyusun dokumen PRD, Desain, Arsitektur, Database, & AGENTS.md, siap diumpankan langsung ke Cursor, Windsurf, atau Claude Code.',
       createProjectBtn: 'Buat Proyek Baru',
       yourProjects: 'Proyek Anda',
       noProjectsTitle: 'Belum ada proyek',
@@ -113,8 +113,8 @@ export const DICTIONARIES = {
       generateBtn: 'Generate Dokumen Sekarang',
     },
     generating: {
-      title: 'Menyusun ruang kerja Anda',
-      subtitle: 'Menulis dokumen spesifikasi arsitektur dengan DeepSeek AI',
+      title: 'Menyiapkan ruang kerja PreVibe',
+      subtitle: 'Menyusun blueprint arsitektur sistem dengan DeepSeek AI',
     },
     workspace: {
       specifications: 'Spesifikasi',
@@ -160,7 +160,7 @@ export const DICTIONARIES = {
 
   en: {
     common: {
-      appName: 'prdmaker',
+      appName: 'PreVibe',
       byline: 'by wigan7',
       pro: 'PRO',
       ai: 'AI',
@@ -198,15 +198,15 @@ export const DICTIONARIES = {
       projectLabel: 'Project',
     },
     footer: {
-      tagline: 'AI-Powered Specification Engine',
+      tagline: 'The Blueprint Engine Before Vibe Coding',
       githubLink: 'wigan7 on github',
     },
     home: {
-      badge: 'AI Specification Architect',
-      heroTitleLine1: 'Turn your idea into',
-      heroTitleGradient: 'production-ready specifications.',
+      badge: 'Before You Vibe Code',
+      heroTitleLine1: 'Shape the blueprint before you',
+      heroTitleGradient: 'start vibe coding.',
       heroSubtitle:
-        'An adaptive AI architect interviews you, maps your project requirements, and writes comprehensive PRD, Design, Architecture, Database, and Agent docs.',
+        'An adaptive AI architect that interviews your vision, crafts production-ready specifications (PRD, Design, Architecture, Database, & AGENTS.md), ready to feed into Cursor, Windsurf, or Claude Code.',
       createProjectBtn: 'Create New Project',
       yourProjects: 'Your Projects',
       noProjectsTitle: 'No projects yet',
@@ -270,8 +270,8 @@ export const DICTIONARIES = {
       generateBtn: 'Generate Documents Now',
     },
     generating: {
-      title: 'Generating your workspace',
-      subtitle: 'Crafting architectural specifications with DeepSeek AI',
+      title: 'Generating your PreVibe workspace',
+      subtitle: 'Crafting architectural blueprints with DeepSeek AI',
     },
     workspace: {
       specifications: 'Specifications',

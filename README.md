@@ -1,14 +1,16 @@
-# prdmaker 🚀
-### AI-Powered Markdown Specification Generator & Architect
+# PreVibe ⚡
+### The Blueprint Engine Before Vibe Coding
 **by [wigan7](https://github.com/wigan7)**
 
-**prdmaker** is an AI-powered software specification engine that interviews developers and product teams, structures project context across 17 architectural dimensions, and crafts production-ready markdown documents:
+**PreVibe** is the essential foundation engine you run *before* vibe coding with Cursor, Claude Code, Windsurf, or Antigravity. It interviews creators, maps product and architectural requirements across 17 dimensions, and crafts production-ready specifications:
 
 - **PRD.md** (Product Requirements Document)
 - **DESIGN.md** (Design & UI/UX Specification)
 - **ARCHITECTURE.md** (System Architecture & Tech Stack)
 - **DATABASE.md** (Database Schema & Data Model)
 - **AGENTS.md** (AI Coding Agent Rules & Guidelines)
+
+Feed these blueprints straight into your AI coding agent and build with zero hallucinations.
 
 ---
 

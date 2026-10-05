@@ -13,7 +13,7 @@ export function Footer() {
         {/* Left: Brand Identity */}
         <div className="flex items-center gap-2">
           <span className="font-semibold text-gray-700 dark:text-gray-300">
-            prdmaker
+            {t.common.appName}
           </span>
           <span>•</span>
           <span>{t.footer.tagline}</span>

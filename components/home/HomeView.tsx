@@ -28,7 +28,7 @@ export function HomeView({
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-secondary text-xs font-medium text-gray-700 dark:text-gray-300 mb-6 border border-black/5 dark:border-white/5 shadow-glass-sm">
           <Sparkles className="w-3.5 h-3.5 text-blue-500" />
-          <span>prdmaker by wigan7</span>
+          <span>{t.common.appName} {t.common.byline}</span>
           <span className="text-gray-300 dark:text-gray-600">•</span>
           <span className="text-gray-500 dark:text-gray-400">{t.home.badge}</span>
         </div>

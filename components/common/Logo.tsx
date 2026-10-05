@@ -17,7 +17,7 @@ export function Logo({ size = 'md', showText = true, className = '' }: LogoProps
 
   return (
     <div className={`flex items-center gap-2.5 select-none ${className}`}>
-      {/* SVG Icon Emblem */}
+      {/* SVG Icon Emblem: PreVibe */}
       <div className="relative shrink-0 flex items-center justify-center">
         {/* Subtle Ambient Glow Behind Logo */}
         <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-violet-500 blur-[8px] opacity-40 dark:opacity-50" />
@@ -32,22 +32,28 @@ export function Logo({ size = 'md', showText = true, className = '' }: LogoProps
         >
           <defs>
             {/* Background Gradient */}
-            <linearGradient id="prd-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="previbe-bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#2563EB" />
               <stop offset="50%" stopColor="#4F46E5" />
               <stop offset="100%" stopColor="#7C3AED" />
             </linearGradient>
 
             {/* Specular Highlight */}
-            <linearGradient id="prd-specular" x1="0%" y1="0%" x2="0%" y2="100%">
+            <linearGradient id="previbe-specular" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.45" />
               <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0" />
             </linearGradient>
 
             {/* Glyph Inner Shadow/Glow */}
-            <linearGradient id="prd-glyph" x1="0%" y1="0%" x2="100%" y2="100%">
+            <linearGradient id="previbe-glyph" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#FFFFFF" />
               <stop offset="100%" stopColor="#E0E7FF" />
+            </linearGradient>
+
+            {/* Neon Vibe Wave Accent */}
+            <linearGradient id="previbe-wave" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#38BDF8" />
+              <stop offset="100%" stopColor="#A78BFA" />
             </linearGradient>
           </defs>
 
@@ -58,7 +64,7 @@ export function Logo({ size = 'md', showText = true, className = '' }: LogoProps
             width="38"
             height="38"
             rx="11"
-            fill="url(#prd-bg-grad)"
+            fill="url(#previbe-bg-grad)"
             stroke="rgba(255,255,255,0.35)"
             strokeWidth="1.2"
           />
@@ -66,47 +72,50 @@ export function Logo({ size = 'md', showText = true, className = '' }: LogoProps
           {/* Glass Light Reflection Arc */}
           <path
             d="M 2 12 Q 2 2 12 2 L 28 2 Q 38 2 38 12 Q 20 18 2 12 Z"
-            fill="url(#prd-specular)"
+            fill="url(#previbe-specular)"
           />
 
-          {/* Geometric Stylized 'P' & Specification Layers */}
-          {/* Stem of P */}
+          {/* Architectural 'P' Stem */}
           <rect
-            x="11"
-            y="10"
-            width="4.5"
-            height="20"
-            rx="2.25"
-            fill="url(#prd-glyph)"
+            x="9.5"
+            y="9.5"
+            width="4"
+            height="21"
+            rx="2"
+            fill="url(#previbe-glyph)"
           />
 
-          {/* Loop of P (Smooth rounded curve with inner void) */}
+          {/* Upper Loop of 'P' */}
           <path
-            d="M 13 10 H 22.5 C 26.6 10 29.5 12.8 29.5 16.5 C 29.5 20.2 26.6 23 22.5 23 H 13 V 10 Z"
-            fill="url(#prd-glyph)"
+            d="M 11.5 9.5 H 19.5 C 23.5 9.5 26 12.2 26 15.8 C 26 19.4 23.5 22.1 19.5 22.1 H 11.5 V 9.5 Z"
+            fill="url(#previbe-glyph)"
           />
           <path
-            d="M 15.5 13.5 H 22 C 24.3 13.5 25.8 14.8 25.8 16.5 C 25.8 18.2 24.3 19.5 22 19.5 H 15.5 V 13.5 Z"
-            fill="url(#prd-bg-grad)"
+            d="M 13.5 13 H 19 C 21.3 13 22.6 14.2 22.6 15.8 C 22.6 17.4 21.3 18.6 19 18.6 H 13.5 V 13 Z"
+            fill="url(#previbe-bg-grad)"
           />
 
-          {/* Dynamic AI Spec Diamond Star */}
+          {/* Dynamic Vibe Pulse Waves (Frequency Bars) */}
+          <rect x="25" y="18" width="2.5" height="10" rx="1.25" fill="url(#previbe-wave)" />
+          <rect x="29" y="13.5" width="2.5" height="14.5" rx="1.25" fill="url(#previbe-wave)" />
+          <rect x="33" y="19.5" width="2.5" height="8.5" rx="1.25" fill="url(#previbe-wave)" />
+
+          {/* AI Spark Star Above Waveform */}
           <path
-            d="M 27.5 25.5 C 28 27.2 28.8 28 30.5 28.5 C 28.8 29 28 29.8 27.5 31.5 C 27 29.8 26.2 29 24.5 28.5 C 26.2 28 27 27.2 27.5 25.5 Z"
+            d="M 30.2 6.5 C 30.6 7.8 31.2 8.4 32.5 8.8 C 31.2 9.2 30.6 9.8 30.2 11.1 C 29.8 9.8 29.2 9.2 27.9 8.8 C 29.2 8.4 29.8 7.8 30.2 6.5 Z"
             fill="#67E8F9"
-            opacity="0.95"
           />
         </svg>
       </div>
 
-      {/* Typography: prdmaker by wigan7 */}
+      {/* Typography: PreVibe by wigan7 */}
       {showText && (
         <div className="flex flex-col leading-none">
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-[15px] tracking-tight text-gray-900 dark:text-gray-100 flex items-center">
-              prd<span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">maker</span>
+            <span className="font-extrabold text-[15px] tracking-tight text-gray-900 dark:text-gray-100 flex items-center">
+              Pre<span className="bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500 bg-clip-text text-transparent">Vibe</span>
             </span>
-            <span className="text-[9px] font-semibold tracking-wider uppercase px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+            <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
               AI
             </span>
           </div>

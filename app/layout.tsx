@@ -3,9 +3,9 @@ import './globals.css';
 import { AmbientBackground } from '@/components/common/AmbientBackground';
 
 export const metadata: Metadata = {
-  title: 'prdmaker by wigan7 — AI Product Architect & Markdown Spec Generator',
+  title: 'PreVibe by wigan7 — The Blueprint Engine Before Vibe Coding',
   description:
-    'prdmaker by wigan7: Turn your application idea into production-ready specifications with an adaptive AI architect. Generates PRD, Design, Architecture, Database, and Agent documents.',
+    'PreVibe by wigan7: Shape your application blueprint before vibe coding. Interactive AI architect producing PRD, Design, Architecture, Database, and AGENTS.md specifications for Cursor, Claude Code, and Windsurf.',
   icons: {
     icon: '/favicon.ico',
   },
