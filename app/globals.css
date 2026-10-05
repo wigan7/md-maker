@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Inter, system-ui, sans-serif;
+  --font-mono: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Light mode tokens */
+  --bg-base: #F8F9FB;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #6B7280;
+
+  /* Glass Light */
+  --glass-primary-bg: rgba(255, 255, 255, 0.65);
+  --glass-primary-border: rgba(255, 255, 255, 0.45);
+  --glass-secondary-bg: rgba(255, 255, 255, 0.40);
+  --glass-secondary-border: rgba(255, 255, 255, 0.30);
+  --glass-floating-bg: rgba(255, 255, 255, 0.85);
+  --glass-floating-border: rgba(255, 255, 255, 0.60);
+
+  /* Accents */
+  --accent-primary: #2563EB;
+  --accent-glow: rgba(37, 99, 235, 0.15);
+}
+
+.dark {
+  /* Dark mode tokens */
+  --bg-base: #0B0C10;
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #6B7280;
+
+  /* Glass Dark */
+  --glass-primary-bg: rgba(18, 20, 26, 0.65);
+  --glass-primary-border: rgba(255, 255, 255, 0.08);
+  --glass-secondary-bg: rgba(26, 29, 38, 0.45);
+  --glass-secondary-border: rgba(255, 255, 255, 0.05);
+  --glass-floating-bg: rgba(22, 24, 32, 0.85);
+  --glass-floating-border: rgba(255, 255, 255, 0.12);
+
+  /* Accents */
+  --accent-primary: #3B82F6;
+  --accent-glow: rgba(59, 130, 246, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glass Utility Classes */
+.glass-primary {
+  background: var(--glass-primary-bg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--glass-primary-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+}
+
+.dark .glass-primary {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+}
+
+.glass-secondary {
+  background: var(--glass-secondary-bg);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--glass-secondary-border);
+}
+
+.glass-floating {
+  background: var(--glass-floating-bg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--glass-floating-border);
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.12);
+}
+
+.dark .glass-floating {
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.55);
+}
+
+.glass-input {
+  background: var(--glass-secondary-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-secondary-border);
+  color: var(--text-primary);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Custom Thin Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 163, 175, 0.5);
+}
+
